@@ -27,6 +27,7 @@ const createPayment = async(req,h) => {
 const paymentDataList = async(req,h) => {
      let docs =  await paymentCollection.paymentDataList(req)
         if(docs){
+            //console.log(docs)
             return docs
         }else{
             return err
@@ -48,12 +49,14 @@ const paymentDataList = async(req,h) => {
     
     const paymentRecordUpdate = async(req,h) => {
         const query = req.query;
+        const data = req.payload
         const params = {_id: mongoose.Types.ObjectId(req.params.id),pin:query.pin};
-        let docs = await paymentCollection.paymentRecordUpdate(params)
+        let docs = await paymentCollection.paymentRecordUpdate(params, data)
         if(docs){
            return docs
        }else{
-           return err
+           return err            
+                                                                               
        }   
     }
 

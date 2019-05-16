@@ -6,7 +6,6 @@ module.exports = [
     config: {
         tags: ['api','Email details'],
         description: 'Email List for Surepay',
-        auth: false
     },
      path: '/sendEmail', 
      handler: Emailctrl

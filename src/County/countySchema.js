@@ -4,10 +4,14 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const CountySchema = new Schema({
-    county : String,
-    city : String,
-    state : String,
-    zip : String
+    propertyNumber: String,
+    County  : String,
+    Name : String,
+    Position : String,
+    Address : String,
+    PhoneNumber: String,
+    EmailAddress: String,
+    Website : String
 });
 
 module.exports = mongoose.model('countyList', CountySchema, 'countyList');

@@ -1,14 +1,14 @@
 var nodemailer = require('nodemailer');
 const emailCollection = require('./emailModel');
-//require('dotenv').config();
+require('dotenv').config();
 
 //Email api
 
 const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
-         user:"keerthirajme@gmail.com",
-         pass: "rajendran5"
+         user:process.env.EMAIL,
+         pass:process.env.PASSWORD
     }
 });
 

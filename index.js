@@ -1,18 +1,19 @@
 const hapi = require('hapi')
-const axios = require(axios)
 const AuthBearer = require('hapi-auth-bearer-token')
 const Inert = require('inert')
 const Vision = require('vision')
+var cors = require('cors')
 const HapiSwagger = require('hapi-swagger')
 const DataBase = require('./src/dbConfig')
- const userAuthentication = require('./src/common/authenticator')
- const userroutes = require('./src/users/userRoutes')
+const userAuthentication = require('./src/common/authenticator')
+const userroutes = require('./src/users/userRoutes')
 const propertyroutes = require('./src/property/propertyRoutes')
 const paymentroutes = require('./src/payment/paymentRoutes')
- const countyroutes = require('./src/County/countyRoutes')
- const assesseeroutes = require('./src/Assessee/assesseeRoutes')
- const mailroutes = require('./src/Email/emailRoutes')
- axios.defaults.baseURL = 'https://139.59.36.120';
+const countyroutes = require('./src/County/countyRoutes')
+const assesseeroutes = require('./src/Assessee/assesseeRoutes')
+const lienInformation = require('./src/LienInformation/lieninformationRoutes')
+const mailroutes = require('./src/Email/emailRoutes')
+const datesroutes = require('./src/Dates/datesRoutes')
 const initializeDatabase = new DataBase()
 initializeDatabase.connection()
 
@@ -35,7 +36,7 @@ const init = async () => {
                 grouping: 'tags'
             }
         }
-    ])   
+    ])
     server.auth.strategy('simple', 'bearer-access-token', {
         allowMultipleHeaders: true,
         validate: async (request, token, h) => {
@@ -43,42 +44,38 @@ const init = async () => {
             const isValid = await userAuth.verifyToken(token);
             const credentials = { token };
             const artifacts = { test: 'info' };
- 
+
             return { isValid, credentials, artifacts };
         }
     })
     server.auth.default('simple')
     await server.start()
-    console.log( `Server running at ${server.info.uri}`)
-    
+    console.log(`Server running at ${server.info.uri}`)
+
 }
 
 server.route({
     method: 'GET',
-    path:'/',
+    path: '/',
     config: {
-        auth: false
+        auth: false,
+        cors: true
     },
     handler: (request, h) => {
         return `Welcome to Surepay API`
     }
 })
-axios.get('/assesseeDataList')
-  .then(function (response) {
-    console.log(response);
-  })
-  .catch(function (error) {
-    console.log(error);
-  });
 server.route(propertyroutes)
 server.route(paymentroutes)
 server.route(userroutes)
 server.route(mailroutes)
 server.route(countyroutes)
-server.route(assesseeroutes )
+server.route(assesseeroutes)
+server.route(datesroutes)
+server.route(lienInformation)
 
 
-process.on('unhandledRejection',(err) => {
+process.on('unhandledRejection', (err) => {
     console.log(err)
     process.exit(1)
 })

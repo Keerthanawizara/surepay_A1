@@ -5,10 +5,15 @@ const Joi = require('joi');
 //server side data validation
 
 const schema = Joi.object().keys({
-    county:Joi.string(),
-    city: Joi.string(),
-    state:Joi.string(),
-    zip: Joi.string()
+    propertyNumber: Joi.string(),
+    County:Joi.string(),
+    Name: Joi.string(),
+    Position:Joi.string(),
+    Address: Joi.string(),
+    PhoneNumber:Joi.string(),
+    EmailAddress:Joi.string(),
+    Website : Joi.string(),
+
 })
 
 //create county api 
@@ -43,7 +48,6 @@ const data = req.payload;
 
 const countyRecordUpdate = async(req,h) => {
     var data = req.payload
-    console.log(data)
     const params = {_id: mongoose.Types.ObjectId(req.params.id)};
         let docs = await countyCollection.countyRecordUpdate(params, data)
         console.log(docs)

@@ -4,6 +4,7 @@ var mongoosePaginate = require('mongoose-paginate');
 const Schema = mongoose.Schema;
 
 const PropertySchema = new Schema({
+    propertyNumber: String,
     county: {
         required: true,
         type: String
@@ -16,18 +17,18 @@ const PropertySchema = new Schema({
     city : String,
     state : String,
     zip : Number,
-    township : String,
-    class_code : String,
-    assessed_value : String,
-    market_value : String,
-    taxes_per_year : String,
-    PREEQEXM : String,
-    home_owners : String,
-    senior_exemption : String,
-    senior_freeze : String,
-    total_acres : String,
-    legal_description : String,
-    google_map_view : String
+    townShip : String,
+    classCode : String,
+    assessedValue : String,
+    marketValue : String,
+    taxesPerYear : String,
+    preeqexm : String,
+    homeOwners : String,
+    seniorExemption : String,
+    senioFreeze : String,
+    totalAcres : String,
+    legalDescription : String,
+    googleMapView : String
 });
 PropertySchema.plugin(mongoosePaginate);
 module.exports = mongoose.model('propertyList', PropertySchema, 'propertyList');

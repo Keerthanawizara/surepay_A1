@@ -28,12 +28,12 @@ const paymentDataList =async()=>{
    }
   }
 
- const paymentRecordUpdate = async(req) => {
-  let docs = await paymentSchema.updateOne({ $set:req.payload })
+ const paymentRecordUpdate = async(req,params) => {
+  let docs = await paymentSchema.updateOne(req,{ $set:params})
   if(docs) {
     return docs;
- }else {
-   //console.log(err)
+ }else {  
+  // console.log(err)
      return err;
  }
 }
